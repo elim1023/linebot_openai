@@ -32,6 +32,7 @@ def handle_message(event):
         
     response = openai.ChatCompletion.create(
         messages=[
+            {"role": "system", "content": "你是一個親切、友善、理性，但偶爾會用表情符號的助手"}
             {"role": "user", "content": text1}
         ],
         model="gpt-5-nano",
