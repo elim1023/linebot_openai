@@ -24,7 +24,12 @@ def callback():
 
 @handler1.add(MessageEvent, message=TextMessage)
 def handle_message(event):
+    user_id = event.source.user_id
     text1=event.message.text
+
+    if user_id not in user_message_count:
+        user_message_count[user_id] = 0
+        
     response = openai.ChatCompletion.create(
         messages=[
             {"role": "user", "content": text1}
@@ -34,9 +39,14 @@ def handle_message(event):
     )
     try:
         ret = response['choices'][0]['message']['content'].strip()
+        user_message_count[user_id] += 1
     except:
         ret = '發生錯誤！'
-    line_bot_api.reply_message(event.reply_token,TextSendMessage(text=ret))
+
+    save_data(user_message_count)
+    count = user_message_count[user_id]
+    reply_text = f"{ret}\n\nGPT已回覆：{count}則訊息"
+    line_bot_api.reply_message(event.reply_token,TextSendMessage(text=reply_text))
 
 if __name__ == '__main__':
     app.run()
