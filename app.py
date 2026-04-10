@@ -22,9 +22,10 @@ def callback():
         abort(400)
     return 'OK'
 
+global gpt_reply_count
 @handler1.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    global gpt_reply_count
+    # global gpt_reply_count
     # user_id = event.source.user_id
     text1=event.message.text
 
