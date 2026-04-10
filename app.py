@@ -22,10 +22,10 @@ def callback():
         abort(400)
     return 'OK'
 
-global gpt_reply_count
+gpt_reply_count = 0
 @handler1.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    # global gpt_reply_count
+    global gpt_reply_count
     # user_id = event.source.user_id
     text1=event.message.text
 
@@ -42,7 +42,6 @@ def handle_message(event):
     )
     try:
         ret = response['choices'][0]['message']['content'].strip()
-        # user_message_count[user_id] += 1
         gpt_reply_count += 1
     except:
         ret = '發生錯誤！'
