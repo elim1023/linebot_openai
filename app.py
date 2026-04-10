@@ -28,8 +28,8 @@ def handle_message(event):
     # user_id = event.source.user_id
     text1=event.message.text
 
-    if user_id not in user_message_count:
-        user_message_count[user_id] = 0
+    # if user_id not in user_message_count:
+    #     user_message_count[user_id] = 0
         
     response = openai.ChatCompletion.create(
         messages=[
